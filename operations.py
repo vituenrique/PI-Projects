@@ -1,6 +1,30 @@
 import numpy as np
 import math 
 
+def Sampling(img, n):
+	sample = [lin[::n] for lin in img[::n]]
+	return np.array(sample)
+
+def UniformQuantizationV1(img, k):
+
+	img = np.float32(img)
+	quantized = img.copy()
+
+	rows, cols, channels = img.shape
+
+	for i in range(rows):
+		for j in range(cols):
+			quantized[i, j] = ((math.pow(2, k) - 1) * np.float32((img[i, j]) - img.min()) / (img.max() - img.min()))
+			quantized[i, j] = np.round(quantized[i, j]) * int(256 / math.pow(2, k))
+
+	return quantized
+
+def UniformQuantizationV2(img, k):
+	a = np.float32(img)
+	bucket = 256 / k
+	quantized = (a / (256 / k))
+	return np.uint8(quantized) * bucket
+
 def And(img1, img2):
 
 	if img1.shape == img2.shape:
@@ -176,8 +200,6 @@ def AddWeighted(img1, alpha, img2, beta, gama):
 def EuclideanDistance(x1, y1, x2, y2):
 	return math.pow(math.pow((x2 - x1), 2) + math.pow((y2 - y1), 2), 0.5)
 
-
-
 def TranslatePixel(x, y, tx, ty):
 
 	translationMatrix = np.array([1, 0, tx, 0, 1, ty, 0, 0, 1]).reshape((3, 3))
@@ -198,7 +220,7 @@ def ScalePixel(x, y, sx, sy):
 
 def RotatePixel(x, y, angle):
 
-	rotationMatrix = np.array([math.cos(angle), -1 * math.sin(angle), 0, math.sin(angle), math.cos(angle), 0, 0, 0, 1]).reshape((3, 3))
+	rotationMatrix = np.array([math.cos(math.radians(angle)), -1 * math.sin(math.radians(angle)), 0, math.sin(math.radians(angle)), math.cos(math.radians(angle)), 0, 0, 0, 1]).reshape((3, 3))
 	pixelMatrix = np.array([x, y, 1]).reshape((3, 1))
 
 	rotatedMatrix = np.dot(rotationMatrix, pixelMatrix)
@@ -214,7 +236,7 @@ def Translate(img, tx, ty):
 	for i in range(rows):
 		for j in range(cols):
 
-			x, y = TranslatePixel(i, j, tx, ty)
+			x, y = TranslatePixel(i, j, ty, tx)
 
 			if x < rows - 1 and y < cols - 1 and x >= 0 and y >= 0:
 				translatedImage[x, y] = img[i, j]
@@ -241,18 +263,13 @@ def Rotate(img, angle, tx = 0, ty = 0):
 	rows, cols, channels = img.shape
 	rotatedImage = np.zeros((rows, cols, channels), np.uint8)
 
-	if tx != 0 or ty != 0:
-		img = Translate(img, -1 * tx, -1 * ty)
-
 	for i in range(rows):
 		for j in range(cols):
+			x, y = TranslatePixel(i, j, -ty, -tx)
+			x, y = RotatePixel(x, y, angle)
+			x, y = TranslatePixel(x, y, ty, tx)
 
-			x, y = RotatePixel(i, j, angle)
-
-			if x >= 0 and y >= 0:
+			if x < rows - 1 and y < cols - 1 and x >= 0 and y >= 0:
 				rotatedImage[int(x), int(y)] = img[i, j]
-
-	if tx != 0 or ty != 0:
-		rotatedImage = Translate(rotatedImage, tx, ty)
 
 	return rotatedImage

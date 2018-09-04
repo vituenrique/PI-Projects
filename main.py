@@ -9,6 +9,9 @@ def main():
 	img4 = cv2.imread('Images/teste4.png', 0)
 
 	'''
+	sampled = Sampling(img1, 2)
+	quantized = UniformQuantizationV2(img1, 200)
+
 	_and = And(img3, img4)
 	_or = Or(img3, img4)
 	_xor = Xor(img3, img4)
@@ -19,6 +22,13 @@ def main():
 	multi = Multi(img1, 0.5)
 	div = Div(img1, img2)
 	sumWeighted = AddWeighted(img1, 0.5, img2, 0.7, 0)
+	
+	translated = Translate(img1, 50, -50)
+	scaled = Scale(img1, 2, 2)
+	rotated = Rotate(img1, 30)
+
+	cv2.imshow('Amostragem', sampled)
+	cv2.imshow('Quantizacao', quantized)
 	
 	cv2.imshow('Img3', img3)
 	cv2.imshow('Img4', img4)
@@ -35,13 +45,14 @@ def main():
 	cv2.imshow('Multiplicacao', multi)
 	cv2.imshow('Divisao', div)
 	
-	translated = Translate(img1, 50, -50)
+	cv2.imshow('Escalonamento', scaled)
+	cv2.imshow('Rotacao', rotated)
 	cv2.imshow('Translacao', translated)
 
-	scaled = Scale(img1, 2, 2)
-	cv2.imshow('Escalonamento', scaled)
+
 	'''
-	rotated = Rotate(img1, 179, 250, 250)
+
+	rotated = Rotate(img1, 90, 200, 200)
 	cv2.imshow('Rotacao', rotated)
 
 	cv2.waitKey(0)
