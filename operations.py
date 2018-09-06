@@ -161,11 +161,11 @@ def Div(img1, img2):
 				else:
 					g = 0
 				
-				if img2[i, j, 1] != 0:
+				if img2[i, j, 2] != 0:
 					r = (img1[i, j, 2] / img2[i, j, 2])
 				else:
 					r = 0
-
+				np.uint8([b, g, r])
 				_returnImg[i, j] = [b, g, r]
 	return _returnImg
 
