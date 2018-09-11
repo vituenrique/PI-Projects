@@ -56,14 +56,17 @@ def T2():
 
 	img = cv2.imread('Images/lenna.png')
 
-	#CMY = RGB2CMY(img)
-	#YCrCb = RGB2YCrCb(img)
-	#YUV = RGB2YUV(img)
-	#YIQ = RGB2YIQ(img)
-	cv2.imshow('YIQ', YIQ)
+	CMY = RGB2CMY(img)
+	YCrCb = RGB2YCrCb(img)
+	YUV = RGB2YUV(img)
+	YIQ = RGB2YIQ(img)
 
+	cv2.imwrite('Output/YIQ2.png', YIQ)
+	cv2.imwrite('Output/CMY2.png', CMY)
+	cv2.imwrite('Output/YUV3.png', YUV)
+	cv2.imwrite('Output/YCrCb2.png', YCrCb)
 
-	cv2.waitKey(0)
+	#cv2.waitKey(0)
 
 def main():
 	

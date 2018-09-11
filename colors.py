@@ -45,10 +45,12 @@ def RGB2YUV(img):
 	for i in range(rows):
 		for j in range(cols):			
 			Y = np.sum(np.multiply(img[i, j], constY))
-			U = np.sum(np.subtract(img[i, j, 0], Y))
-			V = np.sum(np.subtract(img[i, j, 2], Y))
+			val = np.subtract(img[i, j, 0], Y)
+			U = np.sum(val if val >= 0 else 0)
+			val = np.subtract(img[i, j, 2], Y)
+			V = np.sum(val if val >= 0 else 0)
 
-			_returnImg[i, j] = [V, U, Y]
+			_returnImg[i, j] = [Y, U, V]
 	return _returnImg
 
 def RGB2YIQ(img):
