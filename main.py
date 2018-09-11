@@ -1,8 +1,9 @@
 import cv2
 from operations import *
+from colors import *
 
-def main():
-	
+def T1():
+
 	img1 = cv2.imread('Images/img1.png')
 	img2 = cv2.imread('Images/img2.png')
 	img3 = cv2.imread('Images/bin1.png', 0)
@@ -49,10 +50,26 @@ def main():
 	cv2.imshow('Escalonamento', scaled)
 	cv2.imshow('Rotacao', rotated)
 	cv2.imshow('Translacao', translated)
+	cv2.waitKey(0)
 
-	
+def T2():
+
+	img = cv2.imread('Images/lenna.png')
+
+	#CMY = RGB2CMY(img)
+	#YCrCb = RGB2YCrCb(img)
+	#YUV = RGB2YUV(img)
+	#YIQ = RGB2YIQ(img)
+	cv2.imshow('YIQ', YIQ)
+
 
 	cv2.waitKey(0)
+
+def main():
+	
+	#T1()
+
+	T2()
 
 if __name__ == "__main__":
 	main()
