@@ -87,15 +87,17 @@ def DitheringFloydSteinberg(img):
 
 	_returnImg = np.zeros((rows, cols), np.uint8)
 
+	copy = img.copy()
+
 	for i in range(rows - 1):
 		for j in range(cols - 1):
-			if(img[i, j] >= threshold):
+			if(copy[i, j] >= threshold):
 				_returnImg[i][j] = 255
 
-			erro = img[i, j] - _returnImg[i, j]
-			_returnImg[i + 1, j] = _returnImg[i + 1, j] + erro * (7 / 16)
-			_returnImg[i, j + 1] = _returnImg[i, j + 1] + erro * (5 / 16)
-			_returnImg[i + 1, j + 1] = _returnImg[i + 1, j + 1] + erro * (1 / 16)
-			_returnImg[i - 1, j + 1] = _returnImg[i - 1, j + 1] + erro * (3 / 16)
+			erro = int(copy[i, j]) - int(_returnImg[i, j])
+			copy[i + 1, j] = copy[i + 1, j] + erro * (7 / 16)
+			copy[i, j + 1] = copy[i, j + 1] + erro * (5 / 16)
+			copy[i + 1, j + 1] = copy[i + 1, j + 1] + erro * (1 / 16)
+			copy[i - 1, j + 1] = copy[i - 1, j + 1] + erro * (3 / 16)
 
 	return _returnImg

@@ -125,8 +125,8 @@ def main():
 	
 	#runOperations()
 	#runColorModels()
-	#runDithering()
-	runEnhancement()
+	runDithering()
+	#runEnhancement()
 
 if __name__ == "__main__":
 	main()
