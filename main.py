@@ -3,6 +3,8 @@ from operations import *
 from colors import *
 from dithering import *
 from enhancement import *
+from histogram import *
+
 
 def runOperations():
 
@@ -121,12 +123,33 @@ def runEnhancement():
 	cv2.imshow('Original', img)
 	cv2.waitKey(0)
 
+def runHistogram():
+
+	img = cv2.imread('Images/lenna.png', 0)
+
+	print("Processando histogramas...")
+
+	hist = calcHist(img)
+	normalized = calcNormalizedHist(img)
+
+	cumulative = calcCumulativeHist(img)
+
+	#plotHistogram([hist, normalized, cumulative])
+
+	equalized = calcEqualizeHist(img)
+	cv2.imshow('Original', img)
+	cv2.imshow('equalized', equalized)
+	cv2.waitKey(0)
+
+	print("Histogramas finalizados!")
+
 def main():
 	
 	#runOperations()
 	#runColorModels()
-	runDithering()
+	#runDithering()
 	#runEnhancement()
+	runHistogram()
 
 if __name__ == "__main__":
 	main()
