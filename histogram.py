@@ -44,7 +44,7 @@ def calcCumulativeHist(img):
 
 	return cumulative
 
-def calcEqualizeHist(img):
+def calcFlattenedHist(img):
 	rows, cols = img.shape
 
 	_returnImg = np.zeros((rows, cols), np.uint8)
@@ -54,6 +54,7 @@ def calcEqualizeHist(img):
 	
 	factor = (255) / (rows * cols)
 
+	# Flattened histogram
 	for k in range(256):
 		cumulative[k] = round(cumulative[k] * factor)
 
@@ -67,7 +68,27 @@ def calcEqualizeHist(img):
 
 	return _returnImg
 
+def calcStrechingHist(img, bits):
 
+	rows, cols = img.shape
+
+	_returnImg = np.zeros((rows, cols), np.uint8)
+
+	plow = np.amin(img)
+	phigh = np.amax(img)
+
+	level = (2 ** bits) - 1
+
+	for i in range(rows):
+		for j in range(cols):
+			if img[i, j] <= plow:
+				_returnImg[i, j] = 0
+			elif img[i, j] >= phigh:
+				_returnImg[i, j] = level
+			else:
+				_returnImg[i, j] = round(level * (img[i, j] - plow) / (phigh - plow))
+
+	return _returnImg
 
 def plotHistogram(hists = None):
 	if hists != None:

@@ -4,6 +4,7 @@ from colors import *
 from dithering import *
 from enhancement import *
 from histogram import *
+from filters import *
 
 
 def runOperations():
@@ -134,14 +135,29 @@ def runHistogram():
 
 	cumulative = calcCumulativeHist(img)
 
-	#plotHistogram([hist, normalized, cumulative])
+	streched = calcStrechingHist(img, 8)
 
-	equalized = calcEqualizeHist(img)
+	plotHistogram([hist, normalized, cumulative, calcHist(streched)])
+
+	flattened = calcFlattenedHist(img)
+
 	cv2.imshow('Original', img)
-	cv2.imshow('equalized', equalized)
+	cv2.imshow('Flattened', flattened)
+	cv2.imshow('streched', streched)
 	cv2.waitKey(0)
 
 	print("Histogramas finalizados!")
+
+def runFilters():
+	img = cv2.imread('Images/lenna.png', 0)
+
+	average = MovingAverageFilter(img, 5)
+	gaussian = GaussianFilter(img)
+	median = MedianFilter(img, 7)
+
+	cv2.imwrite('Outputs/Filters/average.png', average)
+	cv2.imwrite('Outputs/Filters/gaussian.png', gaussian)
+	cv2.imwrite('Outputs/Filters/median.png', median)
 
 def main():
 	
@@ -149,7 +165,8 @@ def main():
 	#runColorModels()
 	#runDithering()
 	#runEnhancement()
-	runHistogram()
+	#runHistogram()
+	runFilters()
 
 if __name__ == "__main__":
 	main()
