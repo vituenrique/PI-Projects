@@ -160,11 +160,23 @@ def runFilters():
 	cv2.imwrite('Outputs/Filters/median.png', median)
 
 def runDetection():
-	img = cv2.imread('Images/solitaria.jpg', 0)
+	img = cv2.imread('Images/sunset.jpg', 0)
 
-	isolated = IsolatedPoints(img, 254)
-
-	cv2.imwrite('Outputs/Detection/isolated.png', isolated)
+	#point = PointDetection(img, 250)
+	#line0 = LineDetection(img, 250, 0)
+	#line45	= LineDetection(img, 200, 1)
+	#line90	= LineDetection(img, 200, 2)
+	#line135 = LineDetection(img, 200, 3)
+	dx, dy = BorderDetection(img)
+	cv2.imshow('Original', img)
+	cv2.imshow('DX', dx)
+	cv2.imshow('DY', dy)
+	cv2.waitKey(0)
+	#cv2.imwrite('Outputs/Detection/point.png', point)
+	#cv2.imwrite('Outputs/Detection/line0.png', line0)
+	#cv2.imwrite('Outputs/Detection/line45.png', line45)
+	#cv2.imwrite('Outputs/Detection/line90.png', line90)
+	#cv2.imwrite('Outputs/Detection/line135.png', line135)
 
 def main():
 	
