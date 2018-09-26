@@ -5,7 +5,7 @@ from dithering import *
 from enhancement import *
 from histogram import *
 from filters import *
-
+from detection import *
 
 def runOperations():
 
@@ -159,6 +159,13 @@ def runFilters():
 	cv2.imwrite('Outputs/Filters/gaussian.png', gaussian)
 	cv2.imwrite('Outputs/Filters/median.png', median)
 
+def runDetection():
+	img = cv2.imread('Images/solitaria.jpg', 0)
+
+	isolated = IsolatedPoints(img, 254)
+
+	cv2.imwrite('Outputs/Detection/isolated.png', isolated)
+
 def main():
 	
 	#runOperations()
@@ -166,7 +173,8 @@ def main():
 	#runDithering()
 	#runEnhancement()
 	#runHistogram()
-	runFilters()
+	#runFilters()
+	runDetection()
 
 if __name__ == "__main__":
 	main()
