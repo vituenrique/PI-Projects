@@ -160,23 +160,33 @@ def runFilters():
 	cv2.imwrite('Outputs/Filters/median.png', median)
 
 def runDetection():
-	img = cv2.imread('Images/sunset.jpg', 0)
+	img = cv2.imread('Images/lenna.png', 0)
+	img2 = cv2.imread('Images/retas.png', 0)
 
-	#point = PointDetection(img, 250)
-	#line0 = LineDetection(img, 250, 0)
-	#line45	= LineDetection(img, 200, 1)
-	#line90	= LineDetection(img, 200, 2)
-	#line135 = LineDetection(img, 200, 3)
-	dx, dy = BorderDetection(img)
-	cv2.imshow('Original', img)
-	cv2.imshow('DX', dx)
-	cv2.imshow('DY', dy)
-	cv2.waitKey(0)
-	#cv2.imwrite('Outputs/Detection/point.png', point)
-	#cv2.imwrite('Outputs/Detection/line0.png', line0)
-	#cv2.imwrite('Outputs/Detection/line45.png', line45)
-	#cv2.imwrite('Outputs/Detection/line90.png', line90)
-	#cv2.imwrite('Outputs/Detection/line135.png', line135)
+	point = PointDetection(img, 250)
+	
+	line0 = LineDetection(img2, 250, 0)
+	line45	= LineDetection(img2, 200, 1)
+	line90	= LineDetection(img2, 250, 2)
+	line135 = LineDetection(img2, 200, 3)
+
+	borderStandard = BorderDetection(img, 120)
+	borderRoberts = BorderDetection(img, 120, 1)
+	borderPrewitt = BorderDetection(img, 120, 2)
+	borderSobel = BorderDetection(img, 120, 3)
+	
+
+	cv2.imwrite('Outputs/Detection/point.png', point)
+
+	cv2.imwrite('Outputs/Detection/line0.png', line0)
+	cv2.imwrite('Outputs/Detection/line45.png', line45)
+	cv2.imwrite('Outputs/Detection/line90.png', line90)
+	cv2.imwrite('Outputs/Detection/line135.png', line135)
+
+	cv2.imwrite('Outputs/Detection/border.png', borderStandard)
+	cv2.imwrite('Outputs/Detection/roberts.png', borderRoberts)
+	cv2.imwrite('Outputs/Detection/prewitt.png', borderPrewitt)
+	cv2.imwrite('Outputs/Detection/sobel.png', borderSobel)
 
 def main():
 	
